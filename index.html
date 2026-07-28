@@ -284,7 +284,7 @@
             </div>
         </section>
 
-        <!-- VIEW: CAJA (UPDATED TO MATCH EXACT FORMAT) -->
+        <!-- VIEW: CAJA -->
         <section id="view-caja" class="hidden space-y-3">
             <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm space-y-3 pb-4">
                 <div class="bg-emerald-600 text-white p-3 flex justify-between items-center shadow-xs">
@@ -315,6 +315,7 @@
                                 <input type="number" id="am-datafono" value="0" oninput="calculateCaja()" class="w-full bg-white border border-slate-200 rounded-xl py-2 text-center text-xs font-bold text-slate-800 focus:outline-none focus:border-cyan-500 shadow-2xs">
                             </div>
                             <div class="space-y-1">
+                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider block text-center">Rosas</span>
                                 <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider block text-center">Rosas</span>
                                 <input type="number" id="am-rosas" value="0" oninput="calculateCaja()" class="w-full bg-white border border-slate-200 rounded-xl py-2 text-center text-xs font-bold text-slate-800 focus:outline-none focus:border-cyan-500 shadow-2xs">
                             </div>
@@ -360,7 +361,8 @@
                     <div class="pt-2 space-y-2 border-t border-dashed border-slate-200">
                         <div class="flex justify-between items-center px-1">
                             <span class="text-xs font-bold text-slate-900 uppercase tracking-wide">Resumen del Día</span>
-                            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-lg flex items-center gap-1">
+                            <!-- GUARDADO LABEL (Hidden by default, shows only on typing/autocommit) -->
+                            <span id="save-status-badge" class="hidden text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-lg flex items-center gap-1 transition-all">
                                 <i class="fa-solid fa-check text-[9px]"></i> Guardado
                             </span>
                         </div>
@@ -458,6 +460,8 @@
             "Aleix": "5555555E"
         };
 
+        let saveTimeout = null;
+
         function updateLoginInitial() {
             const select = document.getElementById('login-user-select');
             const dniInput = document.getElementById('dni-input');
@@ -481,13 +485,6 @@
                 document.getElementById('greeting-username').textContent = selectedUser;
                 document.getElementById('table-user-cell').textContent = selectedUser;
                 
-                const superBadge = document.getElementById('super-badge');
-                if (selectedUser === 'Damian') {
-                    superBadge.classList.remove('hidden');
-                } else {
-                    superBadge.classList.add('hidden');
-                }
-
                 authContainer.style.display = 'none';
             } else {
                 alert('Contraseña (DNI) incorrecta para ' + selectedUser + '. Comprueba los datos de prueba.');
@@ -525,23 +522,6 @@
             });
         }
 
-        function toggleClockIn(btn) {
-            if (btn.classList.contains('bg-slate-900')) {
-                btn.classList.remove('bg-slate-900', 'hover:bg-slate-800');
-                btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
-                btn.innerHTML = '<i class="fa-regular fa-circle-stop text-white text-sm"></i> Finalizar Turno';
-            } else {
-                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
-                btn.classList.add('bg-slate-900', 'hover:bg-slate-800');
-                btn.innerHTML = '<i class="fa-regular fa-circle-play text-cyan-400 text-sm"></i> Fichar Entrada';
-            }
-        }
-
-        function changeNominaUser(userName) {
-            const labels = document.querySelectorAll('.nomina-user-label');
-            labels.forEach(lbl => lbl.textContent = userName);
-        }
-
         function calculateCaja() {
             const amEf = parseFloat(document.getElementById('am-efectivo').value) || 0;
             const amDt = parseFloat(document.getElementById('am-datafono').value) || 0;
@@ -563,6 +543,24 @@
             document.getElementById('resumen-tarjeta').textContent = totalDt + '€';
             document.getElementById('resumen-rosas').textContent = totalRo + '€';
             document.getElementById('resumen-total').textContent = totalGeneral + '€';
+
+            // Trigger simulated auto-save indicator
+            triggerAutoSave();
+        }
+
+        function triggerAutoSave() {
+            const badge = document.getElementById('save-status-badge');
+            if (!badge) return;
+
+            // Hide badge while typing/changing values
+            badge.classList.add('hidden');
+
+            if (saveTimeout) clearTimeout(saveTimeout);
+
+            // After 800ms of inactivity, simulate saving and show "Guardado"
+            saveTimeout = setTimeout(() => {
+                badge.classList.remove('hidden');
+            }, 800);
         }
     </script>
 </body>
