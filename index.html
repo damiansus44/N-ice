@@ -316,7 +316,6 @@
                             </div>
                             <div class="space-y-1">
                                 <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider block text-center">Rosas</span>
-                                <span class="text-[8px] font-bold text-slate-400 uppercase tracking-wider block text-center">Rosas</span>
                                 <input type="number" id="am-rosas" value="0" oninput="calculateCaja()" class="w-full bg-white border border-slate-200 rounded-xl py-2 text-center text-xs font-bold text-slate-800 focus:outline-none focus:border-cyan-500 shadow-2xs">
                             </div>
                         </div>
@@ -544,7 +543,6 @@
             document.getElementById('resumen-rosas').textContent = totalRo + '€';
             document.getElementById('resumen-total').textContent = totalGeneral + '€';
 
-            // Trigger simulated auto-save indicator
             triggerAutoSave();
         }
 
@@ -552,12 +550,10 @@
             const badge = document.getElementById('save-status-badge');
             if (!badge) return;
 
-            // Hide badge while typing/changing values
             badge.classList.add('hidden');
 
             if (saveTimeout) clearTimeout(saveTimeout);
 
-            // After 800ms of inactivity, simulate saving and show "Guardado"
             saveTimeout = setTimeout(() => {
                 badge.classList.remove('hidden');
             }, 800);
