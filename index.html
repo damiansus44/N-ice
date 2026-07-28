@@ -11,12 +11,12 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col justify-between select-none">
 
-    <!-- Header superior (Visible en vista Horarios/Inicio) -->
+    <!-- Header superior -->
     <header id="main-header" class="bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-xs">
         <div>
             <h1 class="text-lg font-black tracking-tight text-slate-900 leading-tight">PISTA DE HIELO</h1>
             <p class="text-xs text-slate-500 flex items-center gap-1 font-medium mt-0.5">
-                <i class="fa-solid fa-location-dot text-cyan-600"></i> Sant Feliu - Damian
+                <i class="fa-solid fa-location-dot text-cyan-600"></i> Sant Feliu - Damian <span class="bg-cyan-100 text-cyan-800 text-[9px] px-1.5 py-0.5 rounded-full font-bold ml-1">Superusuario</span>
             </p>
         </div>
         <div class="flex items-center gap-2">
@@ -34,10 +34,10 @@
         </div>
     </header>
 
-    <!-- Main Content con vistas intercambiables -->
+    <!-- Main Content -->
     <main class="flex-grow max-w-md w-full mx-auto p-4 space-y-4 pb-24">
 
-        <!-- VISTA 1: HORARIOS (Incluye Fichaje, Colegios y Turnos) -->
+        <!-- VISTA 1: HORARIOS -->
         <section id="view-horarios" class="space-y-4">
             <!-- Control de Horario / Fichaje -->
             <div class="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-sm text-center space-y-4">
@@ -53,7 +53,7 @@
                 </button>
             </div>
 
-            <!-- Avisos / Colegios / Grupos -->
+            <!-- Avisos / Colegios -->
             <div class="space-y-2.5">
                 <div class="bg-amber-50/70 border-l-4 border-amber-500 p-3.5 rounded-2xl flex items-center justify-between shadow-2xs">
                     <div class="flex items-center gap-3">
@@ -112,10 +112,13 @@
                 </div>
             </div>
 
-            <!-- Cuadrante Diario -->
+            <!-- Cuadrante Diario (Modificable Superusuario) -->
             <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                 <div class="bg-rose-500 text-white p-4 flex justify-between items-center">
-                    <h3 class="font-bold text-sm tracking-wide">Martes, 28 De Julio</h3>
+                    <div>
+                        <h3 class="font-bold text-sm tracking-wide">Martes, 28 De Julio</h3>
+                        <p class="text-[10px] text-rose-100">Modo Edición Superusuario (Damián)</p>
+                    </div>
                     <div class="bg-white/20 p-2 rounded-xl">
                         <i class="fa-regular fa-calendar text-sm"></i>
                     </div>
@@ -130,29 +133,8 @@
                                 <th class="p-2.5">Pista</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
-                            <tr>
-                                <td class="p-3 text-left pl-3 text-indigo-950 font-bold">10:00<br><span class="text-[10px] text-slate-400 font-normal">14:30</span></td>
-                                <td class="p-3">Tania</td>
-                                <td class="p-3 text-slate-500 leading-tight">Dylan<br>Jirafa<br>Aleix</td>
-                                <td class="p-3">Marina</td>
-                            </tr>
-                            <tr class="bg-slate-900 text-white font-semibold">
-                                <td class="p-3 text-left pl-3">14:30<br><span class="text-[10px] text-slate-400 font-normal">16:30</span></td>
-                                <td colspan="2" class="p-3 tracking-wider text-cyan-400 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> VIGILANCIA</td>
-                                <td class="p-3 text-slate-100 bg-slate-800 rounded-xl my-1">Damian</td>
-                            </tr>
-                            <tr>
-                                <td class="p-3 text-left pl-3 text-indigo-950 font-bold">16:30<br><span class="text-[10px] text-slate-400 font-normal">21:15</span></td>
-                                <td class="p-3">Tania</td>
-                                <td class="p-3 text-slate-500 leading-tight">Dylan<br>Jirafa<br>Aleix</td>
-                                <td class="p-3">Marina</td>
-                            </tr>
-                            <tr class="bg-slate-900 text-white font-semibold">
-                                <td class="p-3 text-left pl-3">21:00<br><span class="text-[10px] text-slate-400 font-normal">09:00</span></td>
-                                <td colspan="2" class="p-3 tracking-wider text-cyan-400 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> VIGILANCIA</td>
-                                <td class="p-3 text-slate-400 italic">A asignar</td>
-                            </tr>
+                        <tbody id="schedule-tbody" class="divide-y divide-slate-100 font-medium text-slate-700">
+                            <!-- Inyectado por JS -->
                         </tbody>
                     </table>
                 </div>
@@ -173,10 +155,6 @@
                     <label class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 text-sm cursor-pointer hover:bg-slate-100 transition-all">
                         <input type="checkbox" class="w-4 h-4 text-cyan-600 rounded border-slate-300 focus:ring-cyan-500">
                         <span class="font-medium text-slate-700">Desinfección de patines de alquiler</span>
-                    </label>
-                    <label class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 text-sm cursor-pointer hover:bg-slate-100 transition-all">
-                        <input type="checkbox" class="w-4 h-4 text-cyan-600 rounded border-slate-300 focus:ring-cyan-500">
-                        <span class="font-medium text-slate-700">Cuadre de caja de la sesión matinal</span>
                     </label>
                 </div>
             </div>
@@ -202,13 +180,10 @@
                         <span class="text-cyan-600 text-base">1,426.00 €</span>
                     </div>
                 </div>
-                <button onclick="alert('Descargando nómina en PDF...')" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 rounded-2xl text-xs transition-all shadow-sm cursor-pointer flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-download"></i> Descargar Última Nómina (PDF)
-                </button>
             </div>
         </section>
 
-        <!-- VISTA 4: CAJA (Recaudación) -->
+        <!-- VISTA 4: CAJA -->
         <section id="view-caja" class="hidden space-y-4">
             <div class="grid grid-cols-2 gap-3">
                 <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
@@ -227,26 +202,16 @@
                 <form id="form-recaudacion" onsubmit="addRevenue(event)" class="space-y-3">
                     <div>
                         <label class="block text-[11px] font-bold text-slate-500 mb-1">Concepto</label>
-                        <select id="rev-concept" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-cyan-500">
+                        <select id="rev-concept" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium">
                             <option value="Entrada General">Entrada General Pista</option>
                             <option value="Alquiler Patines">Alquiler de Patines</option>
-                            <option value="Cafetería / Vending">Cafetería / Bar</option>
                         </select>
                     </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-500 mb-1">Importe (€)</label>
-                            <input type="number" step="0.01" id="rev-amount" required placeholder="0.00" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-cyan-500">
-                        </div>
-                        <div>
-                            <label class="block text-[11px] font-bold text-slate-500 mb-1">Pago</label>
-                            <select id="rev-method" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-cyan-500">
-                                <option value="Efectivo">Efectivo</option>
-                                <option value="Tarjeta">Tarjeta</option>
-                            </select>
-                        </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-500 mb-1">Importe (€)</label>
+                        <input type="number" step="0.01" id="rev-amount" required placeholder="0.00" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium">
                     </div>
-                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl text-xs transition-all shadow-sm cursor-pointer">
+                    <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl text-xs transition-all cursor-pointer">
                         Añadir Ingreso
                     </button>
                 </form>
@@ -259,26 +224,17 @@
                 <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-users text-cyan-600"></i> Plantilla Activa
                 </h2>
-                <div class="space-y-2.5" id="staff-list-container">
+                <div class="space-y-2.5">
                     <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
-                        <div>
-                            <p class="font-bold text-slate-800">Carlos Gomez</p>
-                            <span class="text-[10px] text-slate-500">Coordinador &bull; Completo</span>
-                        </div>
+                        <div><p class="font-bold text-slate-800">Carlos Gomez</p><span class="text-[10px] text-slate-500">Coordinador</span></div>
                         <span class="bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full text-[10px]">Activo</span>
                     </div>
                     <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
-                        <div>
-                            <p class="font-bold text-slate-800">Ana Martí</p>
-                            <span class="text-[10px] text-slate-500">Taquilla &bull; Mañana</span>
-                        </div>
+                        <div><p class="font-bold text-slate-800">Ana Martí</p><span class="text-[10px] text-slate-500">Taquilla</span></div>
                         <span class="bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full text-[10px]">Activo</span>
                     </div>
                     <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
-                        <div>
-                            <p class="font-bold text-slate-800">Damian</p>
-                            <span class="text-[10px] text-slate-500">Monitor / Pista &bull; Tarde</span>
-                        </div>
+                        <div><p class="font-bold text-slate-800">Damian (Superusuario)</p><span class="text-[10px] text-slate-500">Monitor / Vigilante</span></div>
                         <span class="bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full text-[10px]">Activo</span>
                     </div>
                 </div>
@@ -287,7 +243,7 @@
 
     </main>
 
-    <!-- Bottom Navigation Bar (Fija abajo estilo app móvil) -->
+    <!-- Bottom Navigation Bar -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2.5 px-3 flex justify-around items-center z-50 shadow-lg max-w-md mx-auto">
         <button onclick="switchTab('horarios')" id="nav-horarios" class="flex flex-col items-center gap-1 text-cyan-600 transition-all cursor-pointer">
             <i class="fa-regular fa-calendar text-lg"></i>
@@ -311,15 +267,13 @@
         </button>
     </nav>
 
-    <!-- JavaScript para interactividad de la App Móvil -->
+    <!-- Script con lógica de edición de turnos, puestos y personal -->
     <script>
         function switchTab(tabName) {
             const views = ['horarios', 'tareas', 'nomina', 'caja', 'personal'];
-            
             views.forEach(v => {
                 const section = document.getElementById(`view-${v}`);
                 const navBtn = document.getElementById(`nav-${v}`);
-                
                 if (v === tabName) {
                     section.classList.remove('hidden');
                     navBtn.className = "flex flex-col items-center gap-1 text-cyan-600 transition-all cursor-pointer font-bold";
@@ -332,14 +286,6 @@
                     navBtn.querySelector('span').classList.add('font-medium');
                 }
             });
-
-            // Ocultar header superior en vistas secundarias si se prefiere o mantenerlo limpio
-            const header = document.getElementById('main-header');
-            if(tabName === 'horarios') {
-                header.classList.remove('hidden');
-            } else {
-                header.classList.remove('hidden'); // Se mantiene consistente
-            }
         }
 
         function toggleClockIn(btn) {
@@ -356,6 +302,57 @@
             }
         }
 
+        // Estado inicial del cuadrante diario editable por Damián (Superusuario)
+        let scheduleData = JSON.parse(localStorage.getItem('icerink_schedule_damian')) || [
+            { id: 1, timeStart: '10:00', timeEnd: '14:30', taquilla: 'Tania', mostrador: 'Dylan, Jirafa, Aleix', pista: 'Marina' },
+            { id: 2, timeStart: '14:30', timeEnd: '16:30', taquilla: 'VIGILANCIA', mostrador: 'VIGILANCIA', pista: 'Damian', isSpecial: true },
+            { id: 3, timeStart: '16:30', timeEnd: '21:15', taquilla: 'Tania', mostrador: 'Dylan, Jirafa, Aleix', pista: 'Marina' },
+            { id: 4, timeStart: '21:00', timeEnd: '09:00', taquilla: 'VIGILANCIA', mostrador: 'VIGILANCIA', pista: 'A asignar', isSpecial: true }
+        ];
+
+        function renderSchedule() {
+            const tbody = document.getElementById('schedule-tbody');
+            tbody.innerHTML = '';
+
+            scheduleData.forEach((row, index) => {
+                let trClass = "hover:bg-slate-50 transition-all";
+                if (row.isSpecial) {
+                    trClass = "bg-slate-900 text-white font-semibold";
+                }
+
+                tbody.innerHTML += `
+                    <tr class="${trClass} border-b border-slate-100">
+                        <td class="p-2.5 text-left pl-3">
+                            <div class="flex items-center gap-1">
+                                <input type="text" value="${row.timeStart}" onchange="updateScheduleField(${index}, 'timeStart', this.value)" class="w-12 bg-transparent border-b border-dashed border-slate-400 text-center text-xs font-bold focus:outline-none">
+                                <span>-</span>
+                                <input type="text" value="${row.timeEnd}" onchange="updateScheduleField(${index}, 'timeEnd', this.value)" class="w-12 bg-transparent border-b border-dashed border-slate-400 text-center text-xs font-bold focus:outline-none">
+                            </div>
+                        </td>
+                        <td class="p-2.5">
+                            <input type="text" value="${row.taquilla}" onchange="updateScheduleField(${index}, 'taquilla', this.value)" class="w-full bg-transparent border-b border-dashed border-slate-400 text-center text-xs focus:outline-none ${row.isSpecial ? 'text-cyan-400 font-bold' : ''}">
+                        </td>
+                        <td class="p-2.5">
+                            <input type="text" value="${row.mostrador}" onchange="updateScheduleField(${index}, 'mostrador', this.value)" class="w-full bg-transparent border-b border-dashed border-slate-400 text-center text-xs focus:outline-none ${row.isSpecial ? 'text-cyan-400 font-bold' : ''}">
+                        </td>
+                        <td class="p-2.5">
+                            <input type="text" value="${row.pista}" onchange="updateScheduleField(${index}, 'pista', this.value)" class="w-full bg-transparent border-b border-dashed border-slate-400 text-center text-xs focus:outline-none ${row.pista === 'A asignar' ? 'text-rose-400 italic font-bold' : ''}">
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function updateScheduleField(index, field, value) {
+            scheduleData[index][field] = value;
+            localStorage.setItem('icerink_schedule_damian', JSON.stringify(scheduleData));
+            renderSchedule();
+        }
+
+        // Inicializar vista de horarios
+        renderSchedule();
+
+        // Control de Caja / Recaudación
         let revenueList = JSON.parse(localStorage.getItem('icerink_revenue_mobile')) || [
             { concept: 'Entrada General', amount: 350.00 },
             { concept: 'Alquiler Patines', amount: 120.50 }
@@ -365,10 +362,8 @@
             e.preventDefault();
             const concept = document.getElementById('rev-concept').value;
             const amount = parseFloat(document.getElementById('rev-amount').value);
-            
             revenueList.push({ concept, amount });
             localStorage.setItem('icerink_revenue_mobile', JSON.stringify(revenueList));
-            
             updateKpis();
             document.getElementById('form-recaudacion').reset();
             alert('Ingreso registrado con éxito.');
@@ -384,7 +379,6 @@
             document.getElementById('kpi-tickets').innerText = totalTickets.toFixed(2) + ' €';
             document.getElementById('kpi-skates').innerText = totalSkates.toFixed(2) + ' €';
         }
-
         updateKpis();
     </script>
 </body>
