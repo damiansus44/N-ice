@@ -98,7 +98,7 @@
                 </div>
                 <div>
                     <h2 class="text-sm font-bold text-slate-900">Control de Horario</h2>
-                    <p class="text-[10px] text-slate-500 mt-0.5">Pulsa para iniciar tu turno. El sistema registra las horas trabajadas.</p>
+                    <p id="clock-status-text" class="text-[10px] text-slate-500 mt-0.5">Pulsa para iniciar tu turno. El sistema registra las horas trabajadas.</p>
                 </div>
                 <button id="clock-btn" onclick="toggleClockIn(this)" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-2xl text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
                     <i class="fa-regular fa-circle-play text-cyan-400 text-sm"></i> Fichar Entrada
@@ -460,6 +460,9 @@
         };
 
         let saveTimeout = null;
+        let isClockedIn = false;
+        let clockTimer = null;
+        let clockSeconds = 0;
 
         function updateLoginInitial() {
             const select = document.getElementById('login-user-select');
@@ -494,6 +497,46 @@
             const authContainer = document.getElementById('auth-container');
             if (authContainer) {
                 authContainer.style.display = 'flex';
+            }
+        }
+
+        function toggleClockIn(btn) {
+            const statusText = document.getElementById('clock-status-text');
+            
+            if (!isClockedIn) {
+                isClockedIn = true;
+                clockSeconds = 0;
+                
+                btn.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-semibold py-2.5 px-4 rounded-2xl text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer";
+                btn.innerHTML = '<i class="fa-regular fa-circle-stop text-white text-sm"></i> Fichar Salida (<span id="clock-counter">00:00:00</span>)';
+                
+                if (statusText) {
+                    statusText.textContent = "Turno en curso. Registrando tiempo...";
+                }
+
+                if (clockTimer) clearInterval(clockTimer);
+                clockTimer = setInterval(() => {
+                    clockSeconds++;
+                    const hours = String(Math.floor(clockSeconds / 3600)).padStart(2, '0');
+                    const minutes = String(Math.floor((clockSeconds % 3600) / 60)).padStart(2, '0');
+                    const seconds = String(clockSeconds % 60).padStart(2, '0');
+                    
+                    const counterEl = document.getElementById('clock-counter');
+                    if (counterEl) {
+                        counterEl.textContent = `${hours}:${minutes}:${seconds}`;
+                    }
+                }, 1000);
+
+            } else {
+                isClockedIn = false;
+                if (clockTimer) clearInterval(clockTimer);
+
+                btn.className = "w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-2xl text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer";
+                btn.innerHTML = '<i class="fa-regular fa-circle-play text-cyan-400 text-sm"></i> Fichar Entrada';
+                
+                if (statusText) {
+                    statusText.textContent = "Turno finalizado. Pulsa para iniciar tu turno.";
+                }
             }
         }
 
