@@ -2,111 +2,111 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>IceRink Manager - Móvil</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col justify-between select-none">
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col justify-between select-none text-sm antialiased">
 
-    <!-- Header superior (Visible en vista Horarios/Inicio) -->
+    <!-- Header superior -->
     <header id="main-header" class="bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center shadow-xs">
         <div>
-            <h1 class="text-lg font-black tracking-tight text-slate-900 leading-tight">PISTA DE HIELO</h1>
-            <p class="text-xs text-slate-500 flex items-center gap-1 font-medium mt-0.5">
-                <i class="fa-solid fa-location-dot text-cyan-600"></i> Sant Feliu - Damian
+            <h1 class="text-base font-black tracking-tight text-slate-900 leading-tight">PISTA DE HIELO</h1>
+            <p class="text-[11px] text-slate-500 flex items-center gap-1 font-medium mt-0.5">
+                <i class="fa-solid fa-location-dot text-cyan-600"></i> Sant Feliu de Llobregat - Damian
             </p>
         </div>
         <div class="flex items-center gap-2">
-            <!-- Widget Clima -->
-            <div class="bg-indigo-950 text-white px-2.5 py-1.5 rounded-xl flex items-center gap-3 text-xs shadow-inner">
-                <span class="flex items-center gap-1"><i class="fa-solid fa-sun text-amber-400"></i> 22°</span>
+            <!-- Widget Clima Dinámico (Sant Feliu de Llobregat) -->
+            <div id="weather-widget" class="bg-indigo-950 text-white px-2.5 py-1.5 rounded-xl flex items-center gap-2.5 text-xs shadow-inner">
+                <span class="flex items-center gap-1"><i class="fa-solid fa-sun text-amber-400" id="weather-icon"></i> <span id="w-temp">--°</span></span>
                 <span class="text-indigo-300">|</span>
-                <span class="text-indigo-200">0 mm</span>
+                <span class="text-indigo-200" id="w-rain">0 mm</span>
                 <span class="text-indigo-300">|</span>
-                <span class="flex items-center gap-1"><i class="fa-solid fa-wind text-indigo-300"></i> 4 km/h</span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-wind text-indigo-300"></i> <span id="w-wind">-- km/h</span></span>
             </div>
             <button onclick="alert('Sesión cerrada')" class="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-50 transition-all cursor-pointer">
-                <i class="fa-solid fa-right-from-bracket text-base"></i>
+                <i class="fa-solid fa-right-from-bracket text-sm"></i>
             </button>
         </div>
     </header>
 
-    <!-- Main Content con vistas intercambiables -->
-    <main class="flex-grow max-w-md w-full mx-auto p-4 space-y-4 pb-24">
+    <!-- Main Content con vistas intercambiables y tamaño adaptado -->
+    <main class="flex-grow max-w-md w-full mx-auto p-3 sm:p-4 space-y-3.5 pb-24">
 
-        <!-- VISTA 1: HORARIOS (Incluye Fichaje, Colegios y Turnos) -->
-        <section id="view-horarios" class="space-y-4">
+        <!-- VISTA 1: HORARIOS -->
+        <section id="view-horarios" class="space-y-3.5">
             <!-- Control de Horario / Fichaje -->
-            <div class="bg-white border border-slate-200/80 rounded-3xl p-5 shadow-sm text-center space-y-4">
-                <div class="w-12 h-12 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center mx-auto text-xl shadow-inner">
+            <div class="bg-white border border-slate-200/80 rounded-3xl p-4 shadow-sm text-center space-y-3">
+                <div class="w-10 h-10 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center mx-auto text-base shadow-inner">
                     <i class="fa-regular fa-clock"></i>
                 </div>
                 <div>
-                    <h2 class="text-lg font-bold text-slate-900">Control de Horario</h2>
-                    <p class="text-xs text-slate-500 mt-0.5">Pulsa para iniciar tu turno. El sistema redondea cada 15 min.</p>
+                    <h2 class="text-base font-bold text-slate-900">Control de Horario</h2>
+                    <p class="text-[11px] text-slate-500 mt-0.5">Pulsa para iniciar tu turno. El sistema redondea cada 15 min.</p>
                 </div>
-                <button onclick="toggleClockIn(this)" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3.5 px-6 rounded-2xl text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
-                    <i class="fa-regular fa-circle-play text-cyan-400 text-lg"></i> Fichar Entrada
+                <button onclick="toggleClockIn(this)" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3 px-5 rounded-2xl text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-regular fa-circle-play text-cyan-400 text-base"></i> Fichar Entrada
                 </button>
             </div>
 
             <!-- Avisos / Colegios / Grupos -->
-            <div class="space-y-2.5">
-                <div class="bg-amber-50/70 border-l-4 border-amber-500 p-3.5 rounded-2xl flex items-center justify-between shadow-2xs">
-                    <div class="flex items-center gap-3">
-                        <div class="text-amber-600 bg-amber-100/80 p-2.5 rounded-xl">
-                            <i class="fa-regular fa-bell text-sm"></i>
+            <div class="space-y-2">
+                <div class="bg-amber-50/70 border-l-4 border-amber-500 p-3 rounded-2xl flex items-center justify-between shadow-2xs">
+                    <div class="flex items-center gap-2.5">
+                        <div class="text-amber-600 bg-amber-100/80 p-2 rounded-xl">
+                            <i class="fa-regular fa-bell text-xs"></i>
                         </div>
                         <div>
                             <div class="flex items-center gap-2">
-                                <span class="text-xs font-bold text-amber-900">10:00</span>
-                                <h3 class="text-sm font-bold text-slate-900">Escola Sant Jordi</h3>
+                                <span class="text-[11px] font-bold text-amber-900">10:00</span>
+                                <h3 class="text-xs font-bold text-slate-900">Escola Sant Jordi</h3>
                             </div>
-                            <p class="text-xs text-slate-600 flex items-center gap-1 mt-0.5"><i class="fa-solid fa-users text-[10px]"></i> 45 Pax</p>
+                            <p class="text-[10px] text-slate-600 flex items-center gap-1 mt-0.5"><i class="fa-solid fa-users text-[9px]"></i> 45 Pax</p>
                         </div>
                     </div>
-                    <span class="bg-white/80 border border-amber-200/60 text-amber-800 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs">
+                    <span class="bg-white/80 border border-amber-200/60 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-xl flex items-center gap-1 shadow-2xs">
                         <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> Juegos
                     </span>
                 </div>
 
-                <div class="bg-amber-50/70 border-l-4 border-amber-500 p-3.5 rounded-2xl flex items-center justify-between shadow-2xs">
-                    <div class="flex items-center gap-3">
-                        <div class="text-amber-600 bg-amber-100/80 p-2.5 rounded-xl">
-                            <i class="fa-regular fa-bell text-sm"></i>
+                <div class="bg-amber-50/70 border-l-4 border-amber-500 p-3 rounded-2xl flex items-center justify-between shadow-2xs">
+                    <div class="flex items-center gap-2.5">
+                        <div class="text-amber-600 bg-amber-100/80 p-2 rounded-xl">
+                            <i class="fa-regular fa-bell text-xs"></i>
                         </div>
                         <div>
                             <div class="flex items-center gap-2">
-                                <span class="text-xs font-bold text-amber-900">06:02</span>
-                                <h3 class="text-sm font-bold text-slate-900">Colegio La Mercè</h3>
+                                <span class="text-[11px] font-bold text-amber-900">06:02</span>
+                                <h3 class="text-xs font-bold text-slate-900">Colegio La Mercè</h3>
                             </div>
-                            <p class="text-xs text-slate-600 flex items-center gap-1 mt-0.5"><i class="fa-solid fa-users text-[10px]"></i> 60 Pax</p>
+                            <p class="text-[10px] text-slate-600 flex items-center gap-1 mt-0.5"><i class="fa-solid fa-users text-[9px]"></i> 60 Pax</p>
                         </div>
                     </div>
-                    <span class="bg-white/80 border border-amber-200/60 text-amber-800 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 shadow-2xs">
+                    <span class="bg-white/80 border border-amber-200/60 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-xl flex items-center gap-1 shadow-2xs">
                         <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i> Juegos
                     </span>
                 </div>
             </div>
 
             <!-- Saludo y Turno Planificado -->
-            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-5 text-white shadow-md space-y-3 relative overflow-hidden">
-                <div class="flex items-center gap-2.5">
-                    <i class="fa-regular fa-face-smile text-2xl text-blue-200"></i>
-                    <h2 class="text-xl font-bold tracking-tight">Hola, Damian!</h2>
+            <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-4 text-white shadow-md space-y-2.5 relative overflow-hidden">
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-face-smile text-xl text-blue-200"></i>
+                    <h2 class="text-base font-bold tracking-tight">Hola, Damian!</h2>
                 </div>
-                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3.5 space-y-1">
-                    <p class="text-[10px] font-bold text-blue-200 uppercase tracking-wider">Tu turno planificado:</p>
-                    <div class="flex items-center gap-3">
-                        <div class="bg-white/20 p-2 rounded-xl text-white">
-                            <i class="fa-regular fa-clock text-base"></i>
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3 space-y-1">
+                    <p class="text-[9px] font-bold text-blue-200 uppercase tracking-wider">Tu turno planificado:</p>
+                    <div class="flex items-center gap-2.5">
+                        <div class="bg-white/20 p-1.5 rounded-xl text-white">
+                            <i class="fa-regular fa-clock text-sm"></i>
                         </div>
                         <div>
-                            <h4 class="text-sm font-black tracking-wide">VIGILANTE</h4>
-                            <p class="text-xs text-blue-100 font-medium">14:30 - 16:30</p>
+                            <h4 class="text-xs font-black tracking-wide">VIGILANTE</h4>
+                            <p class="text-[11px] text-blue-100 font-medium">14:30 - 16:30</p>
                         </div>
                     </div>
                 </div>
@@ -114,15 +114,15 @@
 
             <!-- Cuadrante Diario -->
             <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-                <div class="bg-rose-500 text-white p-4 flex justify-between items-center">
-                    <h3 class="font-bold text-sm tracking-wide">Martes, 28 De Julio</h3>
-                    <div class="bg-white/20 p-2 rounded-xl">
-                        <i class="fa-regular fa-calendar text-sm"></i>
+                <div class="bg-rose-500 text-white p-3.5 flex justify-between items-center">
+                    <h3 class="font-bold text-xs tracking-wide">Martes, 28 De Julio</h3>
+                    <div class="bg-white/20 p-1.5 rounded-xl">
+                        <i class="fa-regular fa-calendar text-xs"></i>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-center text-xs">
-                        <thead class="bg-slate-100 text-slate-500 font-bold uppercase tracking-wider text-[10px] border-b border-slate-200">
+                    <table class="w-full text-center text-[11px]">
+                        <thead class="bg-slate-100 text-slate-500 font-bold uppercase tracking-wider text-[9px] border-b border-slate-200">
                             <tr>
                                 <th class="p-2.5 text-left pl-3">Hora</th>
                                 <th class="p-2.5">Taquilla</th>
@@ -132,26 +132,26 @@
                         </thead>
                         <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
                             <tr>
-                                <td class="p-3 text-left pl-3 text-indigo-950 font-bold">10:00<br><span class="text-[10px] text-slate-400 font-normal">14:30</span></td>
-                                <td class="p-3">Tania</td>
-                                <td class="p-3 text-slate-500 leading-tight">Dylan<br>Jirafa<br>Aleix</td>
-                                <td class="p-3">Marina</td>
+                                <td class="p-2.5 text-left pl-3 text-indigo-950 font-bold">10:00<br><span class="text-[9px] text-slate-400 font-normal">14:30</span></td>
+                                <td class="p-2.5">Tania</td>
+                                <td class="p-2.5 text-slate-500 leading-tight">Dylan<br>Jirafa<br>Aleix</td>
+                                <td class="p-2.5">Marina</td>
                             </tr>
                             <tr class="bg-slate-900 text-white font-semibold">
-                                <td class="p-3 text-left pl-3">14:30<br><span class="text-[10px] text-slate-400 font-normal">16:30</span></td>
-                                <td colspan="2" class="p-3 tracking-wider text-cyan-400 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> VIGILANCIA</td>
-                                <td class="p-3 text-slate-100 bg-slate-800 rounded-xl my-1">Damian</td>
+                                <td class="p-2.5 text-left pl-3">14:30<br><span class="text-[9px] text-slate-400 font-normal">16:30</span></td>
+                                <td colspan="2" class="p-2.5 tracking-wider text-cyan-400 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> VIGILANCIA</td>
+                                <td class="p-2.5 text-slate-100 bg-slate-800 rounded-xl my-1">Damian</td>
                             </tr>
                             <tr>
-                                <td class="p-3 text-left pl-3 text-indigo-950 font-bold">16:30<br><span class="text-[10px] text-slate-400 font-normal">21:15</span></td>
-                                <td class="p-3">Tania</td>
-                                <td class="p-3 text-slate-500 leading-tight">Dylan<br>Jirafa<br>Aleix</td>
-                                <td class="p-3">Marina</td>
+                                <td class="p-2.5 text-left pl-3 text-indigo-950 font-bold">16:30<br><span class="text-[9px] text-slate-400 font-normal">21:15</span></td>
+                                <td class="p-2.5">Tania</td>
+                                <td class="p-2.5 text-slate-500 leading-tight">Dylan<br>Jirafa<br>Aleix</td>
+                                <td class="p-2.5">Marina</td>
                             </tr>
                             <tr class="bg-slate-900 text-white font-semibold">
-                                <td class="p-3 text-left pl-3">21:00<br><span class="text-[10px] text-slate-400 font-normal">09:00</span></td>
-                                <td colspan="2" class="p-3 tracking-wider text-cyan-400 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> VIGILANCIA</td>
-                                <td class="p-3 text-slate-400 italic">A asignar</td>
+                                <td class="p-2.5 text-left pl-3">21:00<br><span class="text-[9px] text-slate-400 font-normal">09:00</span></td>
+                                <td colspan="2" class="p-2.5 tracking-wider text-cyan-400 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> VIGILANCIA</td>
+                                <td class="p-2.5 text-slate-400 italic">A asignar</td>
                             </tr>
                         </tbody>
                     </table>
@@ -160,21 +160,21 @@
         </section>
 
         <!-- VISTA 2: TAREAS -->
-        <section id="view-tareas" class="hidden space-y-4">
-            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
-                <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+        <section id="view-tareas" class="hidden space-y-3.5">
+            <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-3">
+                <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-list-check text-cyan-600"></i> Tareas Pendientes del Día
                 </h2>
-                <div class="space-y-2.5">
-                    <label class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 text-sm cursor-pointer hover:bg-slate-100 transition-all">
+                <div class="space-y-2">
+                    <label class="flex items-center gap-3 p-2.5 rounded-2xl bg-slate-50 border border-slate-100 text-xs cursor-pointer hover:bg-slate-100 transition-all">
                         <input type="checkbox" class="w-4 h-4 text-cyan-600 rounded border-slate-300 focus:ring-cyan-500">
                         <span class="font-medium text-slate-700">Revisar temperatura y estado del hielo</span>
                     </label>
-                    <label class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 text-sm cursor-pointer hover:bg-slate-100 transition-all">
+                    <label class="flex items-center gap-3 p-2.5 rounded-2xl bg-slate-50 border border-slate-100 text-xs cursor-pointer hover:bg-slate-100 transition-all">
                         <input type="checkbox" class="w-4 h-4 text-cyan-600 rounded border-slate-300 focus:ring-cyan-500">
                         <span class="font-medium text-slate-700">Desinfección de patines de alquiler</span>
                     </label>
-                    <label class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 text-sm cursor-pointer hover:bg-slate-100 transition-all">
+                    <label class="flex items-center gap-3 p-2.5 rounded-2xl bg-slate-50 border border-slate-100 text-xs cursor-pointer hover:bg-slate-100 transition-all">
                         <input type="checkbox" class="w-4 h-4 text-cyan-600 rounded border-slate-300 focus:ring-cyan-500">
                         <span class="font-medium text-slate-700">Cuadre de caja de la sesión matinal</span>
                     </label>
@@ -182,103 +182,94 @@
             </div>
         </section>
 
-        <!-- VISTA 3: NÓMINA (Actualizada según la imagen) -->
-        <section id="view-nomina" class="hidden space-y-4">
-            <!-- Panel de Administración / Selector de Trabajador -->
-            <div class="bg-amber-50/50 border border-amber-200/70 rounded-3xl p-4 shadow-sm space-y-2">
-                <div class="flex items-center gap-1.5 text-amber-800 text-xs font-bold uppercase tracking-wider">
+        <!-- VISTA 3: NÓMINA -->
+        <section id="view-nomina" class="hidden space-y-3.5">
+            <div class="bg-amber-50/50 border border-amber-200/70 rounded-3xl p-3.5 shadow-sm space-y-1.5">
+                <div class="flex items-center gap-1.5 text-amber-800 text-[10px] font-bold uppercase tracking-wider">
                     <i class="fa-solid fa-shield-halved"></i> Panel de Admin
                 </div>
                 <div class="relative">
-                    <select class="w-full bg-white border border-amber-200 rounded-2xl px-4 py-3 text-sm font-bold text-slate-800 appearance-none focus:outline-none focus:border-amber-400 shadow-2xs cursor-pointer">
+                    <select class="w-full bg-white border border-amber-200 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-800 appearance-none focus:outline-none focus:border-amber-400 shadow-2xs cursor-pointer">
                         <option value="damian">Damian</option>
                         <option value="carlos">Carlos Gomez</option>
                         <option value="ana">Ana Martí</option>
                     </select>
-                    <div class="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-slate-400">
-                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Resumen Total Ganado / Horas -->
-            <div class="bg-blue-600 rounded-3xl p-5 text-white shadow-md space-y-4 relative overflow-hidden">
-                <div class="absolute right-[-10px] bottom-[-20px] text-blue-500/20 text-9xl font-black pointer-events-none select-none">
+            <div class="bg-blue-600 rounded-3xl p-4 text-white shadow-md space-y-3 relative overflow-hidden">
+                <div class="absolute right-[-10px] bottom-[-20px] text-blue-500/20 text-8xl font-black pointer-events-none select-none">
                     <i class="fa-solid fa-dollar-sign"></i>
                 </div>
                 <div class="flex justify-between items-start relative z-10">
                     <div>
-                        <p class="text-[10px] font-bold text-blue-200 uppercase tracking-wider">Total Ganado</p>
-                        <h2 class="text-3xl font-black tracking-tight mt-0.5">122.00€</h2>
+                        <p class="text-[9px] font-bold text-blue-200 uppercase tracking-wider">Total Ganado</p>
+                        <h2 class="text-2xl font-black tracking-tight mt-0.5">122.00€</h2>
                     </div>
                     <div class="text-right">
-                        <p class="text-[10px] font-bold text-blue-200 uppercase tracking-wider">Horas</p>
-                        <h2 class="text-2xl font-black tracking-tight mt-0.5">13.00h</h2>
+                        <p class="text-[9px] font-bold text-blue-200 uppercase tracking-wider">Horas</p>
+                        <h2 class="text-xl font-black tracking-tight mt-0.5">13.00h</h2>
                     </div>
                 </div>
-                <div class="border-t border-blue-500/50 pt-3 flex items-center gap-2 relative z-10 text-xs font-medium text-blue-100">
+                <div class="border-t border-blue-500/50 pt-2.5 flex items-center gap-2 relative z-10 text-[11px] font-medium text-blue-100">
                     <i class="fa-regular fa-user text-blue-200"></i> Nómina de: <span class="font-bold text-white">Damian</span>
                 </div>
             </div>
 
-            <!-- Detalle Diario -->
-            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
+            <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-3">
                 <div class="flex justify-between items-center">
-                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <h3 class="text-xs font-bold text-slate-900 flex items-center gap-2">
                         <i class="fa-regular fa-clock text-cyan-600"></i> Detalle Diario
                     </h3>
-                    <span class="text-[10px] text-slate-400 font-medium">Pulsa el lápiz para editar</span>
+                    <span class="text-[9px] text-slate-400 font-medium">Pulsa el lápiz para editar</span>
                 </div>
 
-                <div class="space-y-3">
-                    <!-- Tarjeta Día 01 -->
-                    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-3.5 flex items-center justify-between shadow-2xs">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-indigo-50 border border-indigo-100 text-indigo-950 px-2.5 py-2 rounded-xl text-center">
-                                <span class="block text-[9px] font-bold uppercase text-indigo-400">DIC</span>
-                                <span class="block text-sm font-black">01</span>
+                <div class="space-y-2.5">
+                    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-3 flex items-center justify-between shadow-2xs">
+                        <div class="flex items-center gap-2.5">
+                            <div class="bg-indigo-50 border border-indigo-100 text-indigo-950 px-2 py-1.5 rounded-xl text-center">
+                                <span class="block text-[8px] font-bold uppercase text-indigo-400">DIC</span>
+                                <span class="block text-xs font-black">01</span>
                             </div>
-                            <div class="space-y-1">
-                                <div class="flex items-center gap-2 text-xs font-medium text-slate-600">
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-1.5 text-[11px] font-medium text-slate-600">
                                     <i class="fa-regular fa-sun text-amber-500"></i> 10:00-14:30 
-                                    <span class="bg-amber-100 text-amber-800 text-[9px] font-bold px-1.5 py-0.5 rounded-md">CAP</span>
+                                    <span class="bg-amber-100 text-amber-800 text-[8px] font-bold px-1 py-0.5 rounded-md">CAP</span>
                                 </div>
-                                <div class="flex items-center gap-2 text-xs font-medium text-slate-600">
+                                <div class="flex items-center gap-1.5 text-[11px] font-medium text-slate-600">
                                     <i class="fa-regular fa-moon text-indigo-500"></i> 16:30-21:00 
-                                    <span class="bg-indigo-100 text-indigo-800 text-[9px] font-bold px-1.5 py-0.5 rounded-md">VIGILANTE</span>
+                                    <span class="bg-indigo-100 text-indigo-800 text-[8px] font-bold px-1 py-0.5 rounded-md">VIGILANTE</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="text-right">
-                                <span class="text-sm font-black text-slate-900">9.00h</span>
-                            </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-black text-slate-900">9.00h</span>
                             <button class="text-slate-300 hover:text-slate-500 transition-colors cursor-pointer p-1">
-                                <i class="fa-solid fa-pen text-xs"></i>
+                                <i class="fa-solid fa-pen text-[10px]"></i>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Tarjeta Día 02 -->
-                    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-3.5 flex items-center justify-between shadow-2xs">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-indigo-50 border border-indigo-100 text-indigo-950 px-2.5 py-2 rounded-xl text-center">
-                                <span class="block text-[9px] font-bold uppercase text-indigo-400">DIC</span>
-                                <span class="block text-sm font-black">02</span>
+                    <div class="bg-slate-50 border border-slate-100 rounded-2xl p-3 flex items-center justify-between shadow-2xs">
+                        <div class="flex items-center gap-2.5">
+                            <div class="bg-indigo-50 border border-indigo-100 text-indigo-950 px-2 py-1.5 rounded-xl text-center">
+                                <span class="block text-[8px] font-bold uppercase text-indigo-400">DIC</span>
+                                <span class="block text-xs font-black">02</span>
                             </div>
-                            <div class="space-y-1">
-                                <div class="flex items-center gap-2 text-xs font-medium text-slate-600">
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-1.5 text-[11px] font-medium text-slate-600">
                                     <i class="fa-regular fa-moon text-indigo-500"></i> 16:00-20:00 
-                                    <span class="bg-indigo-100 text-indigo-800 text-[9px] font-bold px-1.5 py-0.5 rounded-md">VIGILANTE</span>
+                                    <span class="bg-indigo-100 text-indigo-800 text-[8px] font-bold px-1 py-0.5 rounded-md">VIGILANTE</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3">
-                            <div class="text-right">
-                                <span class="text-sm font-black text-slate-900">4.00h</span>
-                            </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-black text-slate-900">4.00h</span>
                             <button class="text-slate-300 hover:text-slate-500 transition-colors cursor-pointer p-1">
-                                <i class="fa-solid fa-pen text-xs"></i>
+                                <i class="fa-solid fa-pen text-[10px]"></i>
                             </button>
                         </div>
                     </div>
@@ -286,38 +277,38 @@
             </div>
         </section>
 
-        <!-- VISTA 4: CAJA (Recaudación) -->
-        <section id="view-caja" class="hidden space-y-4">
-            <div class="grid grid-cols-2 gap-3">
-                <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-                    <p class="text-[10px] text-slate-400 font-bold uppercase">Entradas</p>
-                    <p id="kpi-tickets" class="text-xl font-black text-cyan-600 mt-1">350.00 €</p>
+        <!-- VISTA 4: CAJA -->
+        <section id="view-caja" class="hidden space-y-3.5">
+            <div class="grid grid-cols-2 gap-2.5">
+                <div class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-sm">
+                    <p class="text-[9px] text-slate-400 font-bold uppercase">Entradas</p>
+                    <p id="kpi-tickets" class="text-lg font-black text-cyan-600 mt-0.5">350.00 €</p>
                 </div>
-                <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-                    <p class="text-[10px] text-slate-400 font-bold uppercase">Alquiler Patines</p>
-                    <p id="kpi-skates" class="text-xl font-black text-emerald-600 mt-1">120.50 €</p>
+                <div class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-sm">
+                    <p class="text-[9px] text-slate-400 font-bold uppercase">Alquiler Patines</p>
+                    <p id="kpi-skates" class="text-lg font-black text-emerald-600 mt-0.5">120.50 €</p>
                 </div>
             </div>
-            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
-                <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+            <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-3">
+                <h2 class="text-xs font-bold text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-cash-register text-cyan-600"></i> Registrar Caja Diaria
                 </h2>
-                <form id="form-recaudacion" onsubmit="addRevenue(event)" class="space-y-3">
+                <form id="form-recaudacion" onsubmit="addRevenue(event)" class="space-y-2.5">
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-500 mb-1">Concepto</label>
+                        <label class="block text-[10px] font-bold text-slate-500 mb-1">Concepto</label>
                         <select id="rev-concept" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-cyan-500">
                             <option value="Entrada General">Entrada General Pista</option>
                             <option value="Alquiler Patines">Alquiler de Patines</option>
                             <option value="Cafetería / Vending">Cafetería / Bar</option>
                         </select>
                     </div>
-                    <div class="grid grid-cols-2 gap-3">
+                    <div class="grid grid-cols-2 gap-2.5">
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-500 mb-1">Importe (€)</label>
+                            <label class="block text-[10px] font-bold text-slate-500 mb-1">Importe (€)</label>
                             <input type="number" step="0.01" id="rev-amount" required placeholder="0.00" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-cyan-500">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-500 mb-1">Pago</label>
+                            <label class="block text-[10px] font-bold text-slate-500 mb-1">Pago</label>
                             <select id="rev-method" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium focus:outline-none focus:border-cyan-500">
                                 <option value="Efectivo">Efectivo</option>
                                 <option value="Tarjeta">Tarjeta</option>
@@ -332,32 +323,32 @@
         </section>
 
         <!-- VISTA 5: PERSONAL -->
-        <section id="view-personal" class="hidden space-y-4">
-            <div class="bg-white border border-slate-200 rounded-3xl p-5 shadow-sm space-y-4">
-                <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+        <section id="view-personal" class="hidden space-y-3.5">
+            <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-3">
+                <h2 class="text-xs font-bold text-slate-900 flex items-center gap-2">
                     <i class="fa-solid fa-users text-cyan-600"></i> Plantilla Activa
                 </h2>
-                <div class="space-y-2.5" id="staff-list-container">
-                    <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
+                <div class="space-y-2" id="staff-list-container">
+                    <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
                         <div>
                             <p class="font-bold text-slate-800">Carlos Gomez</p>
-                            <span class="text-[10px] text-slate-500">Coordinador &bull; Completo</span>
+                            <span class="text-[9px] text-slate-500">Coordinador &bull; Completo</span>
                         </div>
-                        <span class="bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full text-[10px]">Activo</span>
+                        <span class="bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full text-[9px]">Activo</span>
                     </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
+                    <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
                         <div>
                             <p class="font-bold text-slate-800">Ana Martí</p>
-                            <span class="text-[10px] text-slate-500">Taquilla &bull; Mañana</span>
+                            <span class="text-[9px] text-slate-500">Taquilla &bull; Mañana</span>
                         </div>
-                        <span class="bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full text-[10px]">Activo</span>
+                        <span class="bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full text-[9px]">Activo</span>
                     </div>
-                    <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
+                    <div class="flex items-center justify-between p-2.5 bg-slate-50 border border-slate-100 rounded-2xl text-xs">
                         <div>
                             <p class="font-bold text-slate-800">Damian</p>
-                            <span class="text-[10px] text-slate-500">Monitor / Pista &bull; Tarde</span>
+                            <span class="text-[9px] text-slate-500">Monitor / Pista &bull; Tarde</span>
                         </div>
-                        <span class="bg-emerald-100 text-emerald-700 font-bold px-2.5 py-1 rounded-full text-[10px]">Activo</span>
+                        <span class="bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full text-[9px]">Activo</span>
                     </div>
                 </div>
             </div>
@@ -365,31 +356,31 @@
 
     </main>
 
-    <!-- Bottom Navigation Bar (Fija abajo estilo app móvil) -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2.5 px-3 flex justify-around items-center z-50 shadow-lg max-w-md mx-auto">
-        <button onclick="switchTab('horarios')" id="nav-horarios" class="flex flex-col items-center gap-1 text-cyan-600 transition-all cursor-pointer">
-            <i class="fa-regular fa-calendar text-lg"></i>
-            <span class="text-[10px] font-bold tracking-tight">Horarios</span>
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 px-3 flex justify-around items-center z-50 shadow-lg max-w-md mx-auto">
+        <button onclick="switchTab('horarios')" id="nav-horarios" class="flex flex-col items-center gap-0.5 text-cyan-600 transition-all cursor-pointer">
+            <i class="fa-regular fa-calendar text-base"></i>
+            <span class="text-[9px] font-bold tracking-tight">Horarios</span>
         </button>
-        <button onclick="switchTab('tareas')" id="nav-tareas" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-all cursor-pointer">
-            <i class="fa-regular fa-square-check text-lg"></i>
-            <span class="text-[10px] font-medium tracking-tight">Tareas</span>
+        <button onclick="switchTab('tareas')" id="nav-tareas" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 transition-all cursor-pointer">
+            <i class="fa-regular fa-square-check text-base"></i>
+            <span class="text-[9px] font-medium tracking-tight">Tareas</span>
         </button>
-        <button onclick="switchTab('nomina')" id="nav-nomina" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-all cursor-pointer">
-            <i class="fa-solid fa-dollar-sign text-lg"></i>
-            <span class="text-[10px] font-medium tracking-tight">Nómina</span>
+        <button onclick="switchTab('nomina')" id="nav-nomina" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 transition-all cursor-pointer">
+            <i class="fa-solid fa-dollar-sign text-base"></i>
+            <span class="text-[9px] font-medium tracking-tight">Nómina</span>
         </button>
-        <button onclick="switchTab('caja')" id="nav-caja" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-all cursor-pointer">
-            <i class="fa-solid fa-wallet text-lg"></i>
-            <span class="text-[10px] font-medium tracking-tight">Caja</span>
+        <button onclick="switchTab('caja')" id="nav-caja" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 transition-all cursor-pointer">
+            <i class="fa-solid fa-wallet text-base"></i>
+            <span class="text-[9px] font-medium tracking-tight">Caja</span>
         </button>
-        <button onclick="switchTab('personal')" id="nav-personal" class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-all cursor-pointer">
-            <i class="fa-regular fa-user text-lg"></i>
-            <span class="text-[10px] font-medium tracking-tight">Personal</span>
+        <button onclick="switchTab('personal')" id="nav-personal" class="flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 transition-all cursor-pointer">
+            <i class="fa-regular fa-user text-base"></i>
+            <span class="text-[9px] font-medium tracking-tight">Personal</span>
         </button>
     </nav>
 
-    <!-- JavaScript para interactividad de la App Móvil -->
+    <!-- JavaScript para interactividad y Clima Automático de Sant Feliu de Llobregat -->
     <script>
         function switchTab(tabName) {
             const views = ['horarios', 'tareas', 'nomina', 'caja', 'personal'];
@@ -400,38 +391,47 @@
                 
                 if (v === tabName) {
                     section.classList.remove('hidden');
-                    navBtn.className = "flex flex-col items-center gap-1 text-cyan-600 transition-all cursor-pointer font-bold";
+                    navBtn.className = "flex flex-col items-center gap-0.5 text-cyan-600 transition-all cursor-pointer font-bold";
                     navBtn.querySelector('span').classList.add('font-bold');
                     navBtn.querySelector('span').classList.remove('font-medium');
                 } else {
                     section.classList.add('hidden');
-                    navBtn.className = "flex flex-col items-center gap-1 text-slate-400 hover:text-slate-600 transition-all cursor-pointer";
+                    navBtn.className = "flex flex-col items-center gap-0.5 text-slate-400 hover:text-slate-600 transition-all cursor-pointer";
                     navBtn.querySelector('span').classList.remove('font-bold');
                     navBtn.querySelector('span').classList.add('font-medium');
                 }
             });
-
-            const header = document.getElementById('main-header');
-            if(tabName === 'horarios') {
-                header.classList.remove('hidden');
-            } else {
-                header.classList.remove('hidden');
-            }
         }
 
         function toggleClockIn(btn) {
             if (btn.classList.contains('bg-emerald-600')) {
-                btn.innerHTML = `<i class="fa-regular fa-circle-play text-cyan-400 text-lg"></i> Fichar Entrada`;
+                btn.innerHTML = `<i class="fa-regular fa-circle-play text-cyan-400 text-base"></i> Fichar Entrada`;
                 btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
                 btn.classList.add('bg-slate-900', 'hover:bg-slate-800');
                 alert('Turno finalizado correctamente.');
             } else {
-                btn.innerHTML = `<i class="fa-solid fa-circle-stop text-rose-400 text-lg"></i> Fichar Salida (Registrado)`;
+                btn.innerHTML = `<i class="fa-solid fa-circle-stop text-rose-400 text-base"></i> Fichar Salida (Registrado)`;
                 btn.classList.remove('bg-slate-900', 'hover:bg-slate-800');
                 btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
                 alert('¡Entrada fichada con éxito!');
             }
         }
+
+        // Carga automática del clima en tiempo real para Sant Feliu de Llobregat (Coordenadas: 41.3833, 2.046)
+        async function fetchWeather() {
+            try {
+                const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=41.3833&longitude=2.046&current=temperature_2m,precipitation,wind_speed_10m');
+                const data = await response.json();
+                if(data && data.current) {
+                    document.getElementById('w-temp').innerText = Math.round(data.current.temperature_2m) + '°';
+                    document.getElementById('w-rain').innerText = data.current.precipitation + ' mm';
+                    document.getElementById('w-wind').innerText = Math.round(data.current.wind_speed_10m) + ' km/h';
+                }
+            } catch (error) {
+                console.error('No se pudo actualizar la meteorología automáticamente', error);
+            }
+        }
+        fetchWeather();
 
         let revenueList = JSON.parse(localStorage.getItem('icerink_revenue_mobile')) || [
             { concept: 'Entrada General', amount: 350.00 },
