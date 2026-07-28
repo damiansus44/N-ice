@@ -11,11 +11,10 @@
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans min-h-screen flex flex-col justify-between select-none text-sm antialiased">
 
-    <!-- ==================== PANTALLAS DE LOGIN / AUTENTICACIÓN ==================== -->
+    <!-- ==================== PANTALLA DE LOGIN SIMPLIFICADA ==================== -->
     <div id="auth-container" class="fixed inset-0 bg-white z-50 flex flex-col justify-center items-center p-3 overflow-y-auto">
         <div class="max-w-sm w-full mx-auto space-y-5 py-6">
             
-            <!-- Logo Oficial N·ICE -->
             <div class="text-center space-y-1">
                 <div class="flex justify-center items-center gap-1.5 text-2xl font-black tracking-wider text-slate-900">
                     <span class="text-cyan-600">N</span>
@@ -26,66 +25,17 @@
                 <p class="text-[9px] text-slate-400 font-medium uppercase tracking-wider">Sant Feliu</p>
             </div>
 
-            <!-- PASO 1: Selección de Usuario -->
-            <div id="login-step-1" class="space-y-2.5">
-                <div class="space-y-2">
-                    <!-- Damian -->
-                    <button onclick="selectUser('Damian', 'D')" class="w-full bg-white border border-slate-200 hover:border-cyan-500 rounded-2xl p-3 flex items-center justify-between shadow-2xs transition-all cursor-pointer">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs">D</div>
-                            <span class="font-bold text-xs text-slate-800">Damian</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
-                    </button>
-                    <!-- Dylan -->
-                    <button onclick="selectUser('Dylan', 'D')" class="w-full bg-white border border-slate-200 hover:border-cyan-500 rounded-2xl p-3 flex items-center justify-between shadow-2xs transition-all cursor-pointer">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs">D</div>
-                            <span class="font-bold text-xs text-slate-800">Dylan</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
-                    </button>
-                    <!-- Tania -->
-                    <button onclick="selectUser('Tania', 'T')" class="w-full bg-white border border-slate-200 hover:border-cyan-500 rounded-2xl p-3 flex items-center justify-between shadow-2xs transition-all cursor-pointer">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs">T</div>
-                            <span class="font-bold text-xs text-slate-800">Tania</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
-                    </button>
-                    <!-- Jirafa -->
-                    <button onclick="selectUser('Jirafa', 'J')" class="w-full bg-white border border-slate-200 hover:border-cyan-500 rounded-2xl p-3 flex items-center justify-between shadow-2xs transition-all cursor-pointer">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs">J</div>
-                            <span class="font-bold text-xs text-slate-800">Jirafa</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
-                    </button>
-                    <!-- Aleix -->
-                    <button onclick="selectUser('Aleix', 'A')" class="w-full bg-white border border-slate-200 hover:border-cyan-500 rounded-2xl p-3 flex items-center justify-between shadow-2xs transition-all cursor-pointer">
-                        <div class="flex items-center gap-2.5">
-                            <div class="w-8 h-8 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xs">A</div>
-                            <span class="font-bold text-xs text-slate-800">Aleix</span>
-                        </div>
-                        <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- PASO 2: Introducción de Contraseña (DNI) -->
-            <div id="login-step-2" class="hidden space-y-4 bg-white border border-slate-200 rounded-3xl p-4 shadow-sm">
-                <div class="flex items-center justify-between">
-                    <button onclick="backToUserSelect()" class="text-slate-400 hover:text-slate-600 p-1.5 cursor-pointer">
-                        <i class="fa-solid fa-arrow-left text-sm"></i>
-                    </button>
-                    <div class="flex items-center gap-2">
-                        <div id="selected-user-initial" class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xs">D</div>
-                        <div>
-                            <p class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Accediendo como</p>
-                            <h3 id="selected-user-name" class="text-xs font-black text-slate-900">Damian</h3>
-                        </div>
-                    </div>
-                    <div class="w-6"></div>
+            <!-- Caja de Login Directa -->
+            <div class="bg-white border border-slate-200 rounded-3xl p-4 shadow-sm space-y-4">
+                <div class="space-y-1.5">
+                    <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">Seleccionar Trabajador</label>
+                    <select id="login-user-select" onchange="updateLoginInitial()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-cyan-500 shadow-2xs cursor-pointer">
+                        <option value="Damian">Damian (Super Usuario)</option>
+                        <option value="Dylan">Dylan</option>
+                        <option value="Tania">Tania</option>
+                        <option value="Jirafa">Jirafa</option>
+                        <option value="Aleix">Aleix</option>
+                    </select>
                 </div>
 
                 <div class="space-y-1.5">
@@ -143,12 +93,11 @@
         </div>
     </header>
 
-    <!-- Main Content con ancho ajustado al máximo de pantalla móvil -->
+    <!-- Main Content -->
     <main class="flex-grow max-w-sm w-full mx-auto p-2.5 space-y-3 pb-20">
 
-        <!-- VISTA 1: HORARIOS -->
+        <!-- VISTA 1: HORARIOS (Con edición en vivo para Super Usuario) -->
         <section id="view-horarios" class="space-y-3">
-            <!-- Control de Horario / Fichaje -->
             <div class="bg-white border border-slate-200/80 rounded-3xl p-3.5 shadow-sm text-center space-y-2.5">
                 <div class="w-9 h-9 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center mx-auto text-sm shadow-inner">
                     <i class="fa-regular fa-clock"></i>
@@ -162,7 +111,6 @@
                 </button>
             </div>
 
-            <!-- Avisos / Colegios / Grupos -->
             <div class="space-y-2">
                 <div class="bg-amber-50/70 border-l-4 border-amber-500 p-2.5 rounded-2xl flex items-center justify-between shadow-2xs">
                     <div class="flex items-center gap-2">
@@ -181,31 +129,18 @@
                         <i class="fa-solid fa-wand-magic-sparkles text-amber-500 text-[8px]"></i> Juegos
                     </span>
                 </div>
-
-                <div class="bg-amber-50/70 border-l-4 border-amber-500 p-2.5 rounded-2xl flex items-center justify-between shadow-2xs">
-                    <div class="flex items-center gap-2">
-                        <div class="text-amber-600 bg-amber-100/80 p-2 rounded-xl">
-                            <i class="fa-regular fa-bell text-[11px]"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-[10px] font-bold text-amber-900">06:02</span>
-                                <h3 class="text-xs font-bold text-slate-900">Colegio La Mercè</h3>
-                            </div>
-                            <p class="text-[9px] text-slate-600 flex items-center gap-1 mt-0.5"><i class="fa-solid fa-users text-[8px]"></i> 60 Pax</p>
-                        </div>
-                    </div>
-                    <span class="bg-white/80 border border-amber-200/60 text-amber-800 text-[9px] font-bold px-2 py-1 rounded-xl flex items-center gap-1 shadow-2xs">
-                        <i class="fa-solid fa-wand-magic-sparkles text-amber-500 text-[8px]"></i> Juegos
-                    </span>
-                </div>
             </div>
 
             <!-- Saludo y Turno Planificado -->
             <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl p-3.5 text-white shadow-md space-y-2 relative overflow-hidden">
-                <div class="flex items-center gap-1.5">
-                    <i class="fa-regular fa-face-smile text-lg text-blue-200"></i>
-                    <h2 class="text-sm font-bold tracking-tight">Hola, <span id="greeting-username">Damian</span>!</h2>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <i class="fa-regular fa-face-smile text-lg text-blue-200"></i>
+                        <h2 class="text-sm font-bold tracking-tight">Hola, <span id="greeting-username">Damian</span>!</h2>
+                    </div>
+                    <span id="super-badge" class="hidden bg-amber-400 text-amber-950 font-black text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider shadow-inner">
+                        <i class="fa-solid fa-crown text-[8px] mr-0.5"></i> Super Usuario
+                    </span>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-2.5 space-y-0.5">
                     <p class="text-[8px] font-bold text-blue-200 uppercase tracking-wider">Tu turno planificado:</p>
@@ -221,10 +156,13 @@
                 </div>
             </div>
 
-            <!-- Cuadrante Diario -->
+            <!-- Cuadrante Diario (Modificable en vivo) -->
             <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
                 <div class="bg-rose-500 text-white p-3 flex justify-between items-center">
-                    <h3 class="font-bold text-xs tracking-wide">Martes, 28 De Julio</h3>
+                    <div class="space-y-0.5">
+                        <h3 class="font-bold text-xs tracking-wide">Martes, 28 De Julio</h3>
+                        <p id="edit-mode-hint" class="text-[9px] text-rose-100 font-medium hidden">Modo Edición Activo (Pulsa en los nombres para cambiarlos)</p>
+                    </div>
                     <div class="bg-white/20 p-1 rounded-xl">
                         <i class="fa-regular fa-calendar text-[11px]"></i>
                     </div>
@@ -242,20 +180,20 @@
                         <tbody class="divide-y divide-slate-100 font-medium text-slate-700">
                             <tr>
                                 <td class="p-2.5 text-left pl-2.5 text-indigo-950 font-bold">10:00<br><span class="text-[8px] text-slate-400 font-normal">14:30</span></td>
-                                <td class="p-2.5">Tania</td>
-                                <td class="p-2.5 text-slate-500 leading-tight">Dylan<br>Jirafa<br>Aleix</td>
-                                <td class="p-2.5">Marina</td>
+                                <td class="p-2.5"><span class="shift-editable" data-field="t1-taquilla">Tania</span></td>
+                                <td class="p-2.5 text-slate-500 leading-tight"><span class="shift-editable" data-field="t1-m1">Dylan</span><br><span class="shift-editable" data-field="t1-m2">Jirafa</span><br><span class="shift-editable" data-field="t1-m3">Aleix</span></td>
+                                <td class="p-2.5"><span class="shift-editable" data-field="t1-pista">Marina</span></td>
                             </tr>
                             <tr class="bg-slate-900 text-white font-semibold">
                                 <td class="p-2.5 text-left pl-2.5">14:30<br><span class="text-[8px] font-bold">16:30</span></td>
                                 <td colspan="2" class="p-2.5 tracking-wider text-cyan-400 font-bold"><i class="fa-solid fa-shield-halved mr-1"></i> VIGILANCIA</td>
-                                <td class="p-2.5 text-slate-100 bg-slate-800 rounded-xl my-0.5" id="table-user-cell">Damian</td>
+                                <td class="p-2.5 text-slate-100 bg-slate-800 rounded-xl my-0.5"><span class="shift-editable text-cyan-300 font-bold" id="table-user-cell" data-field="t2-pista">Damian</span></td>
                             </tr>
                             <tr>
                                 <td class="p-2.5 text-left pl-2.5 text-indigo-950 font-bold">16:30<br><span class="text-[8px] text-slate-400 font-normal">21:15</span></td>
-                                <td class="p-2.5">Tania</td>
-                                <td class="p-2.5 text-slate-500 leading-tight">Dylan<br>Jirafa<br>Aleix</td>
-                                <td class="p-2.5">Marina</td>
+                                <td class="p-2.5"><span class="shift-editable" data-field="t3-taquilla">Tania</span></td>
+                                <td class="p-2.5 text-slate-500 leading-tight"><span class="shift-editable" data-field="t3-m1">Dylan</span><br><span class="shift-editable" data-field="t3-m2">Jirafa</span><br><span class="shift-editable" data-field="t3-m3">Aleix</span></td>
+                                <td class="p-2.5"><span class="shift-editable" data-field="t3-pista">Marina</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -410,7 +348,7 @@
                 <h2 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
                     <i class="fa-solid fa-users text-cyan-600"></i> Plantilla Activa
                 </h2>
-                <div class="space-y-1.5">
+                <div class="space-y-1.5" id="staff-roster-list">
                     <div class="flex items-center justify-between p-2 bg-slate-50 border border-slate-100 rounded-2xl text-[11px]">
                         <div>
                             <p class="font-bold text-slate-800" id="personal-user-name">Damian</p>
@@ -448,28 +386,24 @@
         </button>
     </nav>
 
-    <!-- JavaScript interactivo -->
+    <!-- JavaScript interactivo y gestión de super usuario -->
     <script>
         let currentUser = 'Damian';
-        let currentInitial = 'D';
+        let isSuperUser = true;
 
-        function selectUser(name, initial) {
-            currentUser = name;
-            currentInitial = initial;
-            document.getElementById('selected-user-name').innerText = name;
-            document.getElementById('selected-user-initial').innerText = initial;
-            
-            const sampleDnis = { 'Damian': '11111111A', 'Dylan': '22222222B', 'Tania': '33333333C', 'Jirafa': '4444444D', 'Aleix': '55555555E' };
-            document.getElementById('dni-input').value = sampleDnis[name] || '';
+        const sampleDnis = { 
+            'Damian': '11111111A', 
+            'Dylan': '22222222B', 
+            'Tania': '33333333C', 
+            'Jirafa': '4444444D', 
+            'Aleix': '55555555E' 
+        };
 
-            document.getElementById('login-step-1').classList.add('hidden');
-            document.getElementById('login-step-2').classList.remove('hidden');
+        function updateLoginInitial() {
+            const selected = document.getElementById('login-user-select').value;
+            document.getElementById('dni-input').value = sampleDnis[selected] || '';
         }
-
-        function backToUserSelect() {
-            document.getElementById('login-step-2').classList.add('hidden');
-            document.getElementById('login-step-1').classList.remove('hidden');
-        }
+        updateLoginInitial();
 
         function loginApp() {
             const dniVal = document.getElementById('dni-input').value.trim();
@@ -477,29 +411,86 @@
                 alert('Por favor, introduce tu contraseña (DNI).');
                 return;
             }
+            currentUser = document.getElementById('login-user-select').value;
+            isSuperUser = (currentUser === 'Damian'); // Damian es super usuario
+
+            // Actualizar textos en la app
             document.getElementById('header-username').innerText = currentUser;
             document.getElementById('greeting-username').innerText = currentUser;
-            document.getElementById('table-user-cell').innerText = currentUser;
             document.getElementById('personal-user-name').innerText = currentUser;
             document.querySelectorAll('.nomina-user-label').forEach(el => el.innerText = currentUser);
+
+            // Gestionar privilegios de Super Usuario
+            const badge = document.getElementById('super-badge');
+            const editHint = document.getElementById('edit-mode-hint');
+            
+            if(isSuperUser) {
+                badge.classList.remove('hidden');
+                editHint.classList.remove('hidden');
+                enableScheduleEditing();
+            } else {
+                badge.classList.add('hidden');
+                editHint.classList.add('hidden');
+                disableScheduleEditing();
+            }
 
             document.getElementById('auth-container').classList.add('hidden');
         }
 
         function logoutApp() {
             document.getElementById('dni-input').value = '';
-            document.getElementById('login-step-2').classList.add('hidden');
-            document.getElementById('login-step-1').classList.remove('hidden');
             document.getElementById('auth-container').classList.remove('hidden');
         }
 
+        // Sistema para que Damian (Super Usuario) modifique turnos en tiempo real
+        function enableScheduleEditing() {
+            document.querySelectorAll('.shift-editable').forEach(span => {
+                span.classList.add('cursor-pointer', 'underline', 'decoration-dotted', 'decoration-cyan-400');
+                span.onclick = function() {
+                    if(!isSuperUser) return;
+                    const currentVal = this.innerText;
+                    const newVal = prompt("Modificar trabajador para este puesto:", currentVal);
+                    if(newVal !== null && newVal.trim() !== "") {
+                        this.innerText = newVal.trim();
+                        saveScheduleChanges();
+                    }
+                };
+            });
+        }
+
+        function disableScheduleEditing() {
+            document.querySelectorAll('.shift-editable').forEach(span => {
+                span.classList.remove('cursor-pointer', 'underline', 'decoration-dotted', 'decoration-cyan-400');
+                span.onclick = null;
+            });
+        }
+
+        function saveScheduleChanges() {
+            // Guardar cambios en localStorage para persistencia opcional
+            const scheduleData = {};
+            document.querySelectorAll('.shift-editable').forEach((span, idx) => {
+                scheduleData['pos_' + idx] = span.innerText;
+            });
+            localStorage.setItem('icerink_schedule_mod', JSON.stringify(scheduleData));
+            alert('¡Horario actualizado con éxito en todos los registros!');
+        }
+
+        // Cargar cambios guardados al iniciar
+        window.addEventListener('DOMContentLoaded', () => {
+            const saved = localStorage.getItem('icerink_schedule_mod');
+            if(saved) {
+                const data = JSON.parse(saved);
+                document.querySelectorAll('.shift-editable').forEach((span, idx) => {
+                    if(data['pos_' + idx]) span.innerText = data['pos_' + idx];
+                });
+            }
+        });
+
         function switchTab(tabName) {
             const views = ['horarios', 'tareas', 'nomina', 'caja', 'personal'];
-            
             views.forEach(v => {
                 const section = document.getElementById(`view-${v}`);
                 const navBtn = document.getElementById(`nav-${v}`);
-                
                 if (v === tabName) {
                     section.classList.remove('hidden');
                     navBtn.className = "flex flex-col items-center gap-0.5 text-cyan-600 transition-all cursor-pointer font-bold";
