@@ -27,7 +27,7 @@
                 <div class="space-y-1.5">
                     <label class="block text-[9px] font-bold text-slate-400 uppercase tracking-wider">Seleccionar Trabajador</label>
                     <select id="login-user-select" onchange="updateLoginInitial()" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-3.5 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-cyan-500 shadow-2xs cursor-pointer">
-                        <option value="Damian">Damian (Super Usuario)</option>
+                        <option value="Damian">Damian</option>
                         <option value="Dylan">Dylan</option>
                         <option value="Tania">Tania</option>
                         <option value="Jirafa">Jirafa</option>
@@ -100,9 +100,24 @@
                     <h2 class="text-sm font-bold text-slate-900">Control de Horario</h2>
                     <p class="text-[10px] text-slate-500 mt-0.5">Pulsa para iniciar tu turno. El sistema registra las horas trabajadas.</p>
                 </div>
+                
+                <!-- Botón de fichar -->
                 <button id="clock-btn" onclick="toggleClockIn(this)" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-2xl text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
                     <i class="fa-regular fa-circle-play text-cyan-400 text-sm"></i> Fichar Entrada
                 </button>
+
+                <!-- Estado del fichaje / Registro en tiempo real -->
+                <div id="clock-status-box" class="hidden bg-slate-50 border border-slate-200 rounded-2xl p-2.5 text-left space-y-1 text-xs">
+                    <div class="flex items-center justify-between font-bold text-slate-800">
+                        <span id="clock-status-title" class="flex items-center gap-1.5 text-emerald-600">
+                            <i class="fa-solid fa-circle-dot text-[8px] animate-pulse"></i> Turno en curso
+                        </span>
+                        <span id="clock-time-indicator" class="text-[10px] text-slate-500 font-semibold">--:--</span>
+                    </div>
+                    <div id="clock-details-text" class="text-[10px] text-slate-600">
+                        Entrada registrada correctamente.
+                    </div>
+                </div>
             </div>
 
             <div class="space-y-2">
@@ -131,9 +146,6 @@
                         <i class="fa-regular fa-face-smile text-lg text-blue-200"></i>
                         <h2 class="text-sm font-bold tracking-tight">Hola, <span id="greeting-username">Damian</span>!</h2>
                     </div>
-                    <span id="super-badge" class="hidden bg-amber-400 text-amber-950 font-black text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider shadow-inner">
-                        <i class="fa-solid fa-crown text-[8px] mr-0.5"></i> Super Usuario
-                    </span>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-2.5 space-y-0.5">
                     <p class="text-[8px] font-bold text-blue-200 uppercase tracking-wider">Tu turno planificado:</p>
@@ -216,7 +228,7 @@
         <section id="view-nomina" class="hidden space-y-3">
             <div class="bg-amber-50/50 border border-amber-200/80 rounded-3xl p-3.5 shadow-xs space-y-2">
                 <div class="flex items-center gap-1.5 text-[10px] font-bold text-amber-800 uppercase tracking-wider">
-                    <i class="fa-solid fa-shield-halved text-amber-600"></i> PANEL DE ADMIN
+                    <i class="fa-solid fa-shield-halved text-amber-600"></i> Panel de Admin
                 </div>
                 <div class="relative">
                     <select id="nomina-admin-select" onchange="changeNominaUser(this.value)" class="w-full bg-white border border-amber-200 rounded-2xl px-3.5 py-3 text-xs font-bold text-slate-800 focus:outline-none focus:border-amber-400 shadow-2xs appearance-none cursor-pointer">
@@ -284,32 +296,11 @@
                             <button class="text-slate-300 hover:text-slate-500 p-1 cursor-pointer"><i class="fa-solid fa-pen text-[10px]"></i></button>
                         </div>
                     </div>
-
-                    <div class="bg-white border border-slate-200 rounded-2xl p-3 flex justify-between items-center shadow-2xs">
-                        <div class="flex items-center gap-3">
-                            <div class="bg-slate-100 text-slate-600 border border-slate-200 rounded-xl p-2 text-center min-w-[42px]">
-                                <span class="text-[8px] font-bold uppercase block text-slate-400 leading-none">DIC</span>
-                                <span class="text-xs font-black text-slate-900 leading-tight">02</span>
-                            </div>
-                            <div class="space-y-0.5">
-                                <div class="flex items-center gap-1.5 flex-wrap">
-                                    <span class="text-[10px] text-slate-700 font-medium flex items-center gap-1"><i class="fa-solid fa-moon text-indigo-900 text-[9px]"></i> 16:00-20:00</span>
-                                    <span class="bg-indigo-100 text-indigo-900 text-[8px] font-bold px-1.5 py-0.5 rounded-md">VIGILANTE</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="text-right">
-                                <span class="text-xs font-black text-slate-900 block">4.00h</span>
-                            </div>
-                            <button class="text-slate-300 hover:text-slate-500 p-1 cursor-pointer"><i class="fa-solid fa-pen text-[10px]"></i></button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- VIEW: CAJA (EXACT MATCH TO REFERENCE IMAGES) -->
+        <!-- VIEW: CAJA -->
         <section id="view-caja" class="hidden space-y-3">
             <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm space-y-3 pb-4">
                 <div class="bg-emerald-600 text-white p-3 flex justify-between items-center shadow-xs">
@@ -325,7 +316,6 @@
                 </div>
 
                 <div class="px-3 space-y-3">
-                    <!-- TURNO MAÑANA -->
                     <div class="bg-amber-50/50 border border-amber-200/80 rounded-2xl p-3 space-y-2">
                         <div class="text-[10px] font-bold text-amber-900 flex items-center gap-1.5 uppercase tracking-wide">
                             <i class="fa-solid fa-sun text-amber-500"></i> Turno Mañana
@@ -346,7 +336,6 @@
                         </div>
                     </div>
 
-                    <!-- TURNO TARDE -->
                     <div class="bg-indigo-50/50 border border-indigo-100 rounded-2xl p-3 space-y-2">
                         <div class="text-[10px] font-bold text-indigo-950 flex items-center gap-1.5 uppercase tracking-wide">
                             <i class="fa-solid fa-moon text-indigo-600"></i> Turno Tarde
@@ -367,7 +356,6 @@
                         </div>
                     </div>
 
-                    <!-- PAGO EXTRA PERSONAL -->
                     <div class="bg-rose-50/60 border border-rose-200/80 rounded-2xl p-3 flex items-center justify-between shadow-2xs">
                         <div class="space-y-0.5">
                             <div class="flex items-center gap-1.5 text-rose-900 font-bold text-xs">
@@ -381,7 +369,6 @@
                         </div>
                     </div>
 
-                    <!-- RESUMEN DEL DÍA -->
                     <div class="pt-2 space-y-2 border-t border-dashed border-slate-200">
                         <div class="flex justify-between items-center px-1">
                             <span class="text-xs font-bold text-slate-900 uppercase tracking-wide">Resumen del Día</span>
@@ -408,31 +395,6 @@
                         <div class="bg-slate-900 text-white rounded-2xl p-3.5 flex justify-between items-center shadow-md">
                             <span class="text-xs font-black uppercase tracking-wider">Total Diario</span>
                             <span class="text-lg font-black" id="resumen-total">0€</span>
-                        </div>
-                    </div>
-
-                    <!-- TOTAL MES & TOTAL TEMPORADA -->
-                    <div class="space-y-2 pt-1">
-                        <div class="bg-white border border-slate-200 rounded-2xl p-3 flex justify-between items-center shadow-2xs cursor-pointer hover:bg-slate-50 transition-all">
-                            <div class="flex items-center gap-2.5">
-                                <div class="text-purple-600 text-sm"><i class="fa-regular fa-calendar-days"></i></div>
-                                <div>
-                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Total Mes</span>
-                                    <span class="text-sm font-black text-slate-900">0€</span>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
-                        </div>
-
-                        <div class="bg-white border border-slate-200 rounded-2xl p-3 flex justify-between items-center shadow-2xs cursor-pointer hover:bg-slate-50 transition-all">
-                            <div class="flex items-center gap-2.5">
-                                <div class="text-emerald-600 text-sm"><i class="fa-solid fa-chart-line"></i></div>
-                                <div>
-                                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Total Temporada (2026/27)</span>
-                                    <span class="text-sm font-black text-slate-900">0€</span>
-                                </div>
-                            </div>
-                            <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
                         </div>
                     </div>
                 </div>
@@ -483,6 +445,8 @@
             "Aleix": "5555555E"
         };
 
+        let clockInTime = null;
+
         function updateLoginInitial() {
             const select = document.getElementById('login-user-select');
             const dniInput = document.getElementById('dni-input');
@@ -506,13 +470,6 @@
                 document.getElementById('greeting-username').textContent = selectedUser;
                 document.getElementById('table-user-cell').textContent = selectedUser;
                 
-                const superBadge = document.getElementById('super-badge');
-                if (selectedUser === 'Damian') {
-                    superBadge.classList.remove('hidden');
-                } else {
-                    superBadge.classList.add('hidden');
-                }
-
                 authContainer.style.display = 'none';
             } else {
                 alert('Contraseña (DNI) incorrecta para ' + selectedUser + '. Comprueba los datos de prueba.');
@@ -551,14 +508,37 @@
         }
 
         function toggleClockIn(btn) {
+            const statusBox = document.getElementById('clock-status-box');
+            const statusTitle = document.getElementById('clock-status-title');
+            const timeIndicator = document.getElementById('clock-time-indicator');
+            const detailsText = document.getElementById('clock-details-text');
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
             if (btn.classList.contains('bg-slate-900')) {
+                // Ficha Entrada
+                clockInTime = now;
                 btn.classList.remove('bg-slate-900', 'hover:bg-slate-800');
                 btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
                 btn.innerHTML = '<i class="fa-regular fa-circle-stop text-white text-sm"></i> Finalizar Turno';
+
+                statusBox.classList.remove('hidden');
+                statusTitle.innerHTML = '<i class="fa-solid fa-circle-dot text-[8px] animate-pulse text-emerald-600"></i> Turno en curso';
+                timeIndicator.textContent = timeString;
+                detailsText.textContent = 'Entrada fichada a las ' + timeString;
             } else {
+                // Ficha Salida (Finaliza Turno)
+                const diffMs = now - clockInTime;
+                const diffHrs = (diffMs / (1000 * 60 * 60)).toFixed(2);
+
                 btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
                 btn.classList.add('bg-slate-900', 'hover:bg-slate-800');
                 btn.innerHTML = '<i class="fa-regular fa-circle-play text-cyan-400 text-sm"></i> Fichar Entrada';
+
+                statusTitle.innerHTML = '<i class="fa-solid fa-check text-[10px] text-blue-600"></i> Turno Finalizado';
+                timeIndicator.textContent = diffHrs + 'h trabajadas';
+                detailsText.textContent = 'Salida registrada. Total jornada: ' + diffHrs + ' horas.';
             }
         }
 
