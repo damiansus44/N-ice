@@ -75,11 +75,11 @@
         </div>
         <div class="flex items-center gap-1.5">
             <div id="weather-widget" class="bg-indigo-950 text-white px-2 py-1 rounded-xl flex items-center gap-1.5 text-[11px] shadow-inner">
-                <span class="flex items-center gap-0.5"><i class="fa-solid fa-sun text-amber-400" id="weather-icon"></i> <span id="w-temp">24°</span></span>
+                <span class="flex items-center gap-0.5"><i class="fa-solid fa-sun text-amber-400" id="weather-icon"></i> <span id="w-temp">22°</span></span>
                 <span class="text-indigo-300">|</span>
                 <span class="text-indigo-200" id="w-rain">0 mm</span>
                 <span class="text-indigo-300">|</span>
-                <span class="flex items-center gap-0.5"><i class="fa-solid fa-wind text-indigo-300"></i> <span id="w-wind">12 km/h</span></span>
+                <span class="flex items-center gap-0.5"><i class="fa-solid fa-wind text-indigo-300"></i> <span id="w-wind">4 km/h</span></span>
             </div>
             <button onclick="logoutApp()" class="p-1.5 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-50 transition-all cursor-pointer" title="Cerrar sesión">
                 <i class="fa-solid fa-right-from-bracket text-xs"></i>
@@ -100,22 +100,9 @@
                     <h2 class="text-sm font-bold text-slate-900">Control de Horario</h2>
                     <p class="text-[10px] text-slate-500 mt-0.5">Pulsa para iniciar tu turno. El sistema registra las horas trabajadas.</p>
                 </div>
-                
                 <button id="clock-btn" onclick="toggleClockIn(this)" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-4 rounded-2xl text-xs transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer">
                     <i class="fa-regular fa-circle-play text-cyan-400 text-sm"></i> Fichar Entrada
                 </button>
-
-                <div id="clock-status-box" class="hidden bg-slate-50 border border-slate-200 rounded-2xl p-2.5 text-left space-y-1 text-xs">
-                    <div class="flex items-center justify-between font-bold text-slate-800">
-                        <span id="clock-status-title" class="flex items-center gap-1.5 text-emerald-600">
-                            <i class="fa-solid fa-circle-dot text-[8px] animate-pulse"></i> Turno en curso
-                        </span>
-                        <span id="clock-time-indicator" class="text-[10px] text-slate-500 font-semibold">--:--</span>
-                    </div>
-                    <div id="clock-details-text" class="text-[10px] text-slate-600">
-                        Entrada registrada correctamente.
-                    </div>
-                </div>
             </div>
 
             <div class="space-y-2">
@@ -144,6 +131,9 @@
                         <i class="fa-regular fa-face-smile text-lg text-blue-200"></i>
                         <h2 class="text-sm font-bold tracking-tight">Hola, <span id="greeting-username">Damian</span>!</h2>
                     </div>
+                    <span id="super-badge" class="hidden bg-amber-400 text-amber-950 font-black text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider shadow-inner">
+                        <i class="fa-solid fa-crown text-[8px] mr-0.5"></i> Admin
+                    </span>
                 </div>
                 <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-2.5 space-y-0.5">
                     <p class="text-[8px] font-bold text-blue-200 uppercase tracking-wider">Tu turno planificado:</p>
@@ -222,7 +212,7 @@
             </div>
         </section>
 
-        <!-- VIEW: NOMINA (ORIGINAL FORMAT RESTORED) -->
+        <!-- VIEW: NOMINA -->
         <section id="view-nomina" class="hidden space-y-3">
             <div class="bg-amber-50/50 border border-amber-200/80 rounded-3xl p-3.5 shadow-xs space-y-2">
                 <div class="flex items-center gap-1.5 text-[10px] font-bold text-amber-800 uppercase tracking-wider">
@@ -294,7 +284,7 @@
             </div>
         </section>
 
-        <!-- VIEW: CAJA (ORIGINAL FORMAT RESTORED) -->
+        <!-- VIEW: CAJA -->
         <section id="view-caja" class="hidden space-y-3">
             <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm space-y-3 pb-4">
                 <div class="bg-emerald-600 text-white p-3 flex justify-between items-center shadow-xs">
@@ -390,8 +380,6 @@
             "Aleix": "5555555E"
         };
 
-        let clockInTime = null;
-
         function updateLoginInitial() {
             const select = document.getElementById('login-user-select');
             const dniInput = document.getElementById('dni-input');
@@ -415,6 +403,13 @@
                 document.getElementById('greeting-username').textContent = selectedUser;
                 document.getElementById('table-user-cell').textContent = selectedUser;
                 
+                const superBadge = document.getElementById('super-badge');
+                if (selectedUser === 'Damian') {
+                    superBadge.classList.remove('hidden');
+                } else {
+                    superBadge.classList.add('hidden');
+                }
+
                 authContainer.style.display = 'none';
             } else {
                 alert('Contraseña (DNI) incorrecta para ' + selectedUser + '. Comprueba los datos de prueba.');
@@ -453,41 +448,43 @@
         }
 
         function toggleClockIn(btn) {
-            const statusBox = document.getElementById('clock-status-box');
-            const statusTitle = document.getElementById('clock-status-title');
-            const timeIndicator = document.getElementById('clock-time-indicator');
-            const detailsText = document.getElementById('clock-details-text');
-            
-            const now = new Date();
-            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
             if (btn.classList.contains('bg-slate-900')) {
-                clockInTime = now;
                 btn.classList.remove('bg-slate-900', 'hover:bg-slate-800');
                 btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
                 btn.innerHTML = '<i class="fa-regular fa-circle-stop text-white text-sm"></i> Finalizar Turno';
-
-                statusBox.classList.remove('hidden');
-                statusTitle.innerHTML = '<i class="fa-solid fa-circle-dot text-[8px] animate-pulse text-emerald-600"></i> Turno en curso';
-                timeIndicator.textContent = timeString;
-                detailsText.textContent = 'Entrada fichada a las ' + timeString;
             } else {
-                const diffMs = now - clockInTime;
-                const diffHrs = (diffMs / (1000 * 60 * 60)).toFixed(2);
-
                 btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
                 btn.classList.add('bg-slate-900', 'hover:bg-slate-800');
                 btn.innerHTML = '<i class="fa-regular fa-circle-play text-cyan-400 text-sm"></i> Fichar Entrada';
-
-                statusTitle.innerHTML = '<i class="fa-solid fa-check text-[10px] text-blue-600"></i> Turno Finalizado';
-                timeIndicator.textContent = diffHrs + 'h trabajadas';
-                detailsText.textContent = 'Salida registrada. Total jornada: ' + diffHrs + ' horas.';
             }
         }
 
         function changeNominaUser(userName) {
             const labels = document.querySelectorAll('.nomina-user-label');
             labels.forEach(lbl => lbl.textContent = userName);
+        }
+
+        function calculateCaja() {
+            const amEf = parseFloat(document.getElementById('am-efectivo').value) || 0;
+            const amDt = parseFloat(document.getElementById('am-datafono').value) || 0;
+            const amRo = parseFloat(document.getElementById('am-rosas').value) || 0;
+
+            const pmEf = parseFloat(document.getElementById('pm-efectivo').value) || 0;
+            const pmDt = parseFloat(document.getElementById('pm-datafono').value) || 0;
+            const pmRo = parseFloat(document.getElementById('pm-rosas').value) || 0;
+
+            const extra = parseFloat(document.getElementById('extra-pago').value) || 0;
+
+            const totalEf = (amEf + pmEf) - extra;
+            const totalDt = amDt + pmDt;
+            const totalRo = amRo + pmRo;
+
+            const totalGeneral = totalEf + totalDt + totalRo;
+
+            document.getElementById('resumen-efectivo').textContent = totalEf + '€';
+            document.getElementById('resumen-tarjeta').textContent = totalDt + '€';
+            document.getElementById('resumen-rosas').textContent = totalRo + '€';
+            document.getElementById('resumen-total').textContent = totalGeneral + '€';
         }
     </script>
 </body>
